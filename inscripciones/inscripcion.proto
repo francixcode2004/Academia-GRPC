@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package inscripciones;
+package inscripcion;
 
 message InscribirUsuarioRequest {
     int32 usuario_id = 1;

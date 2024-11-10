@@ -2,7 +2,7 @@ import sqlite3
 
 def init_db():
     # Conectar a la base de datos
-    conn = sqlite3.connect('inscripciones.db')
+    conn = sqlite3.connect('academia.db')
     return conn
 
 def crear_tabla(conn):
