@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package cursos;
+
+import "google/protobuf/empty.proto";  
+
+message Curso {
+    int32 id = 1;
+    string nombreCurso = 2;
+    string descripcion = 3;
+    string nombreProfesor = 4;
+    int32 numeroDeHoras = 5;
+}
+
+message InsertarCursoRequest {
+    string nombreCurso = 1;
+    string descripcion = 2;
+    string nombreProfesor = 3;
+    int32 numeroDeHoras = 4;
+}
+
+message InsertarCursoResponse {
+    bool exito = 1;
+    string mensaje = 2;
+    Curso curso = 3;
+}
+
+message ObtenerCursosResponse {
+    repeated Curso cursos = 1;
+}
+
+message ObtenerCursoRequest {
+    int32 id = 1;
+}
+
+message ObtenerCursoResponse {
+    bool exito = 1;
+    string mensaje = 2;
+    Curso curso = 3;
+}
+
+message ActualizarCursoRequest {
+    int32 id = 1;
+    string nombreCurso = 2;
+    string descripcion = 3;
+    string nombreProfesor = 4;
+    int32 numeroDeHoras = 5;
+}
+
+message ActualizarCursoResponse {
+    bool exito = 1;
+    string mensaje = 2;
+    Curso curso = 3;
+}
+
+message EliminarCursoRequest {
+    int32 id = 1;
+}
+
+message EliminarCursoResponse {
+    bool exito = 1;
+    string mensaje = 2;
+}
+
+service CursoService {
+    rpc InsertarCurso (InsertarCursoRequest) returns (InsertarCursoResponse);
+    rpc ObtenerCursos (google.protobuf.Empty) returns (ObtenerCursosResponse);
+    rpc ObtenerCurso (ObtenerCursoRequest) returns (ObtenerCursoResponse);
+    rpc ActualizarCurso (ActualizarCursoRequest) returns (ActualizarCursoResponse);
+    rpc EliminarCurso (EliminarCursoRequest) returns (EliminarCursoResponse);
+}
