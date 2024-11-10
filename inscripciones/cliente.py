@@ -1,8 +1,8 @@
 import grpc
-import usuarios_pb2_grpc
-import usuarios_pb2
-import cursos_pb2_grpc
-import cursos_pb2
+import crud_Usuarios.usuarios_pb2_grpc
+import crud_Usuarios.usuarios_pb2
+import cursos.cursos_pb2_grpc
+import cursos.cursos_pb2
 import inscripcion_pb2_grpc
 import inscripcion_pb2
 
