@@ -74,9 +74,9 @@ class Usuarios(usuarios_pb2_grpc.UsuarioServiceServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     usuarios_pb2_grpc.add_UsuarioServiceServicer_to_server(Usuarios(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:50053')
     server.start()
-    print("Servidor gRPC de usuarios escuchando en el puerto 50051...")
+    print("Servidor gRPC de usuarios escuchando en el puerto 50053...")
     server.wait_for_termination()
 
 if __name__ == '__main__':

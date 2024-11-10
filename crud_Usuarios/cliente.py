@@ -5,7 +5,7 @@ from google.protobuf import empty_pb2
 
 def run():
     # Crear canal de comunicación con el servidor
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50053') as channel:
         stub = usuarios_pb2_grpc.UsuarioServiceStub(channel)
 
         # Crear un nuevo usuario

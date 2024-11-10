@@ -95,9 +95,9 @@ def serve():
     bd_cursos.init_db()  # Crear la base de datos si no existe
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     cursos_pb2_grpc.add_CursoServiceServicer_to_server(CursoService(), server)
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('[::]:50052')
     server.start()
-    print('Servidor de cursos iniciado')
+    print('Servidor de cursos iniciado en el puerto 50052')
     server.wait_for_termination()
 
 if __name__ == '__main__':

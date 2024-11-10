@@ -16,7 +16,7 @@ def init_db():
     conn.close()
 
 def insertar_curso(nombreCurso, descripcion, nombreProfesor, numeroDeHoras):
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     cursor.execute('''
         INSERT INTO cursos (nombreCurso, descripcion, nombreProfesor, numeroDeHoras)
@@ -28,7 +28,7 @@ def insertar_curso(nombreCurso, descripcion, nombreProfesor, numeroDeHoras):
     return curso_id
 
 def obtener_cursos():
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM cursos')
     cursos = cursor.fetchall()
@@ -36,7 +36,7 @@ def obtener_cursos():
     return cursos
 
 def obtener_curso_por_id(curso_id):
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM cursos WHERE id = ?', (curso_id,))
     curso = cursor.fetchone()
@@ -46,7 +46,7 @@ def obtener_curso_por_id(curso_id):
 
 def curso_existe(id):
     """Verifica si un curso existe por su ID."""
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     cursor.execute("SELECT 1 FROM cursos WHERE id = ?", (id,))
     existe = cursor.fetchone() is not None
@@ -55,7 +55,7 @@ def curso_existe(id):
 
 def nombre_curso_existe(nombreCurso, id=None):
     """Verifica si ya existe un curso con el mismo nombre (excluyendo el ID dado)."""
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     if id:
         cursor.execute("SELECT 1 FROM cursos WHERE nombreCurso = ? AND id != ?", (nombreCurso, id))
@@ -77,7 +77,7 @@ def actualizar_curso(id, nombreCurso, descripcion, nombreProfesor, numeroDeHoras
         return False, "El nombre del curso ya está registrado."
 
     # Realiza la actualización
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     try:
         cursor.execute('''
@@ -98,7 +98,7 @@ def actualizar_curso(id, nombreCurso, descripcion, nombreProfesor, numeroDeHoras
     return True, "Curso actualizado exitosamente."
 
 def eliminar_curso(id):
-    conn = sqlite3.connect('cursos.db')
+    conn = sqlite3.connect('academia.db')
     cursor = conn.cursor()
     cursor.execute('DELETE FROM cursos WHERE id = ?', (id,))
     conn.commit()

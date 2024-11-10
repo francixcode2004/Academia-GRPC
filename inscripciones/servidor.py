@@ -6,26 +6,39 @@ from db_inscripciones import init_db, inscribir_usuario_en_curso, obtener_cursos
 
 class InscripcionService(inscripcion_pb2_grpc.InscripcionServiceServicer):
     def __init__(self):
-        # Conectar a la base de datos y crear las tablas si no existen
+        # Establecer conexión a la base de datos
         self.conn = init_db()
+        # Crear las tablas si no existen
         crear_tabla(self.conn)
 
     def InscribirUsuarioEnCurso(self, request, context):
-        # Inscribir al usuario en un curso usando la función definida en db_inscripciones.py
-        inscribir_usuario_en_curso(self.conn, request.usuario_id, request.curso_id)
-        return inscripcion_pb2.InscribirUsuarioResponse(exito=True, mensaje="Usuario inscrito exitosamente")
+        """Método para inscribir al usuario en un curso"""
+        try:
+            inscribir_usuario_en_curso(self.conn, request.usuario_id, request.curso_id)
+            return inscripcion_pb2.InscribirUsuarioResponse(
+                exito=True, mensaje="Usuario inscrito exitosamente"
+            )
+        except Exception as e:
+            return inscripcion_pb2.InscribirUsuarioResponse(
+                exito=False, mensaje=f"Error al inscribir: {str(e)}"
+            )
 
     def ObtenerCursosPorUsuario(self, request, context):
-        # Obtener los cursos del usuario usando la función definida en db_inscripciones.py
-        cursos = obtener_cursos_por_usuario(self.conn, request.usuario_id)
-        cursos_response = [
-            inscripcion_pb2.Curso(id=row[0], nombreCurso=row[1], nombreProfesor=row[2])
-            for row in cursos
-        ]
-        return inscripcion_pb2.ObtenerCursosPorUsuarioResponse(curso=cursos_response)
+        """Método para obtener los cursos en los que un usuario está inscrito"""
+        try:
+            cursos = obtener_cursos_por_usuario(self.conn, request.usuario_id)
+            cursos_response = [
+                inscripcion_pb2.Curso(id=row[0], nombreCurso=row[1], nombreProfesor=row[2])
+                for row in cursos
+            ]
+            return inscripcion_pb2.ObtenerCursosPorUsuarioResponse(curso=cursos_response)
+        except Exception as e:
+            context.set_details(f"Error al obtener cursos: {str(e)}")
+            context.set_code(grpc.StatusCode.INTERNAL)
+            return inscripcion_pb2.ObtenerCursosPorUsuarioResponse()
 
 def serve():
-    # Crear el servidor GRPC y agregar el servicio InscripcionService
+    """Configurar y arrancar el servidor gRPC"""
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     inscripcion_pb2_grpc.add_InscripcionServiceServicer_to_server(InscripcionService(), server)
     server.add_insecure_port('[::]:50051')

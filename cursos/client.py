@@ -58,7 +58,7 @@ def eliminar_curso(stub, curso_id):
 
 def run():
     # Conectar al servidor
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
         stub = cursos_pb2_grpc.CursoServiceStub(channel)
         
         # Insertar un curso
@@ -78,6 +78,5 @@ def run():
         
         # Eliminar un curso
         eliminar_curso(stub, 1)
-
 if __name__ == '__main__':
     run()

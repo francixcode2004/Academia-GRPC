@@ -11,7 +11,7 @@ def init_db():
     conn.close()
 
 def email_existe(email):
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     c.execute("SELECT id FROM usuarios WHERE email = ?", (email,))
     existe = c.fetchone() is not None
@@ -19,7 +19,7 @@ def email_existe(email):
     return existe
 
 def agregar_usuario(nombre, email):    
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     try:
         c.execute("INSERT INTO usuarios (nombre, email) VALUES (?, ?)", (nombre, email))
@@ -33,7 +33,7 @@ def agregar_usuario(nombre, email):
 
 def obtener_usuarios():
     
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     c.execute("SELECT * FROM usuarios")
     usuarios = c.fetchall()
@@ -42,7 +42,7 @@ def obtener_usuarios():
 
 def eliminar_usuario(id):
 
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     c.execute("DELETE FROM usuarios WHERE id = ?", (id,))
     conn.commit()
@@ -51,7 +51,7 @@ def eliminar_usuario(id):
 
 def obtener_usuario(id):
 
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     c.execute("SELECT * FROM usuarios WHERE id = ?", (id,))
     usuario = c.fetchone()
@@ -60,7 +60,7 @@ def obtener_usuario(id):
 
 def usuario_existe(id):
 
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     c.execute("SELECT id FROM usuarios WHERE id = ?", (id,))
     existe = c.fetchone() is not None
@@ -76,7 +76,7 @@ def actualizar_usuario(id, nombre, email):
     if email_existe(email):
         return False, "El email ya está registrado."
 
-    conn = sqlite3.connect('usuarios.db')
+    conn = sqlite3.connect('academia.db')
     c = conn.cursor()
     try:
         c.execute("UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?", (nombre, email, id))
