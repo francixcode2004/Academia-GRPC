@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package inscripciones;
+
+message InscribirUsuarioRequest {
+    int32 usuario_id = 1;
+    int32 curso_id = 2;
+}
+
+message InscribirUsuarioResponse {
+    bool exito = 1;
+    string mensaje = 2;
+}
+
+message ObtenerCursosPorUsuarioRequest {
+    int32 usuario_id = 1;
+}
+
+message ObtenerCursosPorUsuarioResponse {
+    repeated Curso curso = 1;
+}
+
+message Curso {
+    int32 id = 1;
+    string nombreCurso = 2;
+    string nombreProfesor = 3;
+}
+
+service InscripcionService {
+    rpc InscribirUsuarioEnCurso (InscribirUsuarioRequest) returns (InscribirUsuarioResponse);
+    rpc ObtenerCursosPorUsuario (ObtenerCursosPorUsuarioRequest) returns (ObtenerCursosPorUsuarioResponse);
+}
