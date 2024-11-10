@@ -1,8 +1,8 @@
 import grpc
-import crud_Usuarios.usuarios_pb2
-import crud_Usuarios.usuarios_pb2_grpc
-import cursos.cursos_pb2
-import cursos.cursos_pb2_grpc
+from crud_Usuarios import usuarios_pb2
+from crud_Usuarios import usuarios_pb2_grpc
+from cursos import cursos_pb2
+from cursos import cursos_pb2_grpc
 import inscripcion_pb2
 import inscripcion_pb2_grpc
 
@@ -129,15 +129,15 @@ def crear_usuario(usuario_channel):
     """Crea un nuevo usuario"""
     nombre = input("Ingrese el nombre del usuario: ")
     email = input("Ingrese el correo del usuario: ")
-    stub = crud_Usuarios.usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
-    response = stub.CrearUsuario(crud_Usuarios.usuarios_pb2.CrearUsuarioRequest(nombre=nombre, email=email))
+    stub = usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
+    response = stub.CrearUsuario(usuarios_pb2.CrearUsuarioRequest(nombre=nombre, email=email))
     print(f"Exito: {response.exito}, Mensaje: {response.mensaje}")
 
 
 def obtener_usuarios(usuario_channel):
     """Obtiene todos los usuarios"""
-    stub = crud_Usuarios.usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
-    response = stub.ObtenerUsuarios(crud_Usuarios.usuarios_pb2.ObtenerUsuariosRequest())
+    stub = usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
+    response = stub.ObtenerUsuarios(usuarios_pb2.ObtenerUsuariosRequest())
     for usuario in response.usuarios:
         print(f"ID: {usuario.id}, Nombre: {usuario.nombre}, Email: {usuario.email}")
 
@@ -147,8 +147,8 @@ def actualizar_usuario(usuario_channel):
     usuario_id = int(input("Ingrese el ID del usuario a actualizar: "))
     nombre = input("Ingrese el nuevo nombre del usuario: ")
     email = input("Ingrese el nuevo correo del usuario: ")
-    stub = crud_Usuarios.usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
-    response = stub.ActualizarUsuario(crud_Usuarios.usuarios_pb2.ActualizarUsuarioRequest(
+    stub = usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
+    response = stub.ActualizarUsuario(usuarios_pb2.ActualizarUsuarioRequest(
         id=usuario_id,
         nombre=nombre,
         email=email
@@ -159,8 +159,8 @@ def actualizar_usuario(usuario_channel):
 def eliminar_usuario(usuario_channel):
     """Elimina un usuario"""
     usuario_id = int(input("Ingrese el ID del usuario a eliminar: "))
-    stub = crud_Usuarios.usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
-    response = stub.EliminarUsuario(crud_Usuarios.usuarios_pb2.EliminarUsuarioRequest(id=usuario_id))
+    stub = usuarios_pb2_grpc.UsuarioServiceStub(usuario_channel)
+    response = stub.EliminarUsuario(usuarios_pb2.EliminarUsuarioRequest(id=usuario_id))
     print(f"Exito: {response.exito}, Mensaje: {response.mensaje}")
 
 
@@ -170,8 +170,8 @@ def insertar_curso(cursos_channel):
     descripcion = input("Ingrese la descripción del curso: ")
     nombre_profesor = input("Ingrese el nombre del profesor: ")
     numero_de_horas = int(input("Ingrese el número de horas del curso: "))
-    stub = cursos.cursos_pb2_grpc.CursoServiceStub(cursos_channel)
-    response = stub.InsertarCurso(cursos.cursos_pb2.InsertarCursoRequest(
+    stub = cursos_pb2_grpc.CursoServiceStub(cursos_channel)
+    response = stub.InsertarCurso(cursos_pb2.InsertarCursoRequest(
         nombreCurso=nombre_curso,
         descripcion=descripcion,
         nombreProfesor=nombre_profesor,
@@ -182,8 +182,8 @@ def insertar_curso(cursos_channel):
 
 def obtener_cursos(cursos_channel):
     """Obtiene todos los cursos"""
-    stub = cursos.cursos_pb2_grpc.CursoServiceStub(cursos_channel)
-    response = stub.ObtenerCursos(cursos.cursos_pb2.ObtenerCursosRequest())
+    stub = cursos_pb2_grpc.CursoServiceStub(cursos_channel)
+    response = stub.ObtenerCursos(cursos_pb2.ObtenerCursosRequest())
     for curso in response.cursos:
         print(f"ID: {curso.id}, Nombre: {curso.nombreCurso}, Profesor: {curso.nombreProfesor}")
 
@@ -191,8 +191,8 @@ def obtener_cursos(cursos_channel):
 def obtener_curso_por_id(cursos_channel):
     """Obtiene un curso por ID"""
     curso_id = int(input("Ingrese el ID del curso a obtener: "))
-    stub = cursos.cursos_pb2_grpc.CursoServiceStub(cursos_channel)
-    response = stub.ObtenerCurso(cursos.cursos_pb2.ObtenerCursoRequest(id=curso_id))
+    stub = cursos_pb2_grpc.CursoServiceStub(cursos_channel)
+    response = stub.ObtenerCurso(cursos_pb2.ObtenerCursoRequest(id=curso_id))
     if response.exito:
         print(f"Curso encontrado: {response.curso.nombreCurso} ({response.curso.nombreProfesor})")
     else:
@@ -206,8 +206,8 @@ def actualizar_curso(cursos_channel):
     descripcion = input("Ingrese la nueva descripción del curso: ")
     nombre_profesor = input("Ingrese el nuevo nombre del profesor: ")
     numero_de_horas = int(input("Ingrese el nuevo número de horas del curso: "))
-    stub = cursos.cursos_pb2_grpc.CursoServiceStub(cursos_channel)
-    response = stub.ActualizarCurso(cursos.cursos_pb2.ActualizarCursoRequest(
+    stub = cursos_pb2_grpc.CursoServiceStub(cursos_channel)
+    response = stub.ActualizarCurso(cursos_pb2.ActualizarCursoRequest(
         id=curso_id,
         nombreCurso=nombre_curso,
         descripcion=descripcion,
@@ -220,8 +220,8 @@ def actualizar_curso(cursos_channel):
 def eliminar_curso(cursos_channel):
     """Elimina un curso"""
     curso_id = int(input("Ingrese el ID del curso a eliminar: "))
-    stub = cursos.cursos_pb2_grpc.CursoServiceStub(cursos_channel)
-    response = stub.EliminarCurso(cursos.cursos_pb2.EliminarCursoRequest(id=curso_id))
+    stub = cursos_pb2_grpc.CursoServiceStub(cursos_channel)
+    response = stub.EliminarCurso(cursos_pb2.EliminarCursoRequest(id=curso_id))
     print(f"Exito: {response.exito}, Mensaje: {response.mensaje}")
 
 
@@ -235,22 +235,21 @@ def listar_cursos(inscripcion_channel):
 
 def inscribirse_curso(inscripcion_channel):
     """Inscribirse en un curso"""
-    curso_id = int(input("Ingrese el ID del curso al que desea inscribirse: "))
     usuario_id = int(input("Ingrese su ID de usuario: "))
+    curso_id = int(input("Ingrese el ID del curso en el que desea inscribirse: "))
     stub = inscripcion_pb2_grpc.InscripcionServiceStub(inscripcion_channel)
-    response = stub.InscribirCurso(inscripcion_pb2.InscribirCursoRequest(
+    response = stub.Inscribirse(inscripcion_pb2.InscribirseRequest(
         usuarioId=usuario_id,
         cursoId=curso_id
     ))
     print(f"Exito: {response.exito}, Mensaje: {response.mensaje}")
 
-if __name__ == "__main__":
-    # Inicializamos los canales gRPC
+
+if __name__ == '__main__':
     usuario_channel, cursos_channel, inscripcion_channel = obtener_canales()
-    user_type = input("¿Es administrador o usuario? (admin/usuario): ").strip().lower()
-    if user_type == "admin":
-        ejecutar_admin(usuario_channel, cursos_channel)
-    elif user_type == "usuario":
-        ejecutar_usuario(inscripcion_channel)
-    else:
-        print("Opción no válida.")
+
+    while True:
+        if input("¿Eres Administrador o Usuario? (a/u): ").lower() == 'a':
+            ejecutar_admin(usuario_channel, cursos_channel)
+        else:
+            ejecutar_usuario(inscripcion_channel)

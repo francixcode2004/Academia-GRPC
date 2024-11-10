@@ -1,10 +1,11 @@
 import grpc
-import crud_Usuarios.usuarios_pb2
-import crud_Usuarios.usuarios_pb2_grpc
-import cursos.cursos_pb2
-import cursos.cursos_pb2_grpc
-import inscripciones.inscripcion_pb2
-import inscripciones.inscripcion_pb2_grpc
+
+from crud_Usuarios import usuarios_pb2
+from crud_Usuarios import usuarios_pb2_grpc
+from cursos import cursos_pb2
+from cursos import cursos_pb2_grpc
+from inscripciones import inscripcion_pb2
+from inscripciones import inscripcion_pb2_grpc
 def obtener_canales():
     """Establece las conexiones gRPC para los servicios de Usuarios, Cursos e Inscripciones"""
     usuario_channel = grpc.insecure_channel('localhost:50053')
